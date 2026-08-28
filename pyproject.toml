@@ -1,0 +1,113 @@
+[project]
+name = "blindwindow"
+dynamic = ["version"]
+description = "A Python application."
+readme = "README.md"
+requires-python = ">=3.10"
+
+dependencies = [
+    "dworshak-config>=0.2.8",
+    "pyhabitat>=1.3.9",
+    "typer>=0.27.0",
+    "typer-helptree>=0.2.12",
+]
+
+license = "MIT"
+license-files = ["LICENSE"]
+
+authors = [
+    { name = "George Clayton Bennett", email = "george.bennett@memphistn.gov" }
+]
+
+maintainers = [
+    { name = "George Clayton Bennett", email = "george.bennett@memphistn.gov" }
+]
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Developers",
+    "Typing :: Typed",
+    "Development Status :: 3 - Alpha",
+    #"Development Status :: 4 - Beta",
+    #"Development Status :: 5 - Production/Stable",
+]
+
+keywords = [
+
+]
+
+#[project.urls]
+#Homepage = ""
+#Repository = ""
+#Issues = ""
+#Changelog = ""
+
+[project.scripts]
+"blindwindow" = "blindwindow.__main__:app"
+
+[dependency-groups]
+test = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.1.0",
+]
+dev = [
+    { include-group = "test" },
+    "build>=1.3.0",
+    "pyinstaller>=6.17.0 ; platform_system == 'Linux' and platform_machine != 'aarch64'",
+    "shiv>=1.0.8",
+    "ruff>=0.7.0 ; platform_system == 'Linux' and platform_machine != 'aarch64'",
+    "maxson-build-utils>=0.1.33",
+]
+
+[project.optional-dependencies]
+gui = [
+    "maxson_gui_utils>=0.1.4",
+]
+
+
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.uv.sources]
+"blindwindow" = { path = "src/blindwindow" }
+
+#[tool.setuptools]
+#packages = [""blindwindow""]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.dynamic]
+version = { file = "src/blindwindow/VERSION" }
+
+[tool.setuptools.package-data]
+"blindwindow" = [
+    "data/*",
+    "data/icons/*",
+    "data/icons/**/*",
+    "data/themes/*",
+    "data/themes/**/*",
+]
+
+[tool.maxson-build-utils.names]
+import = "blindwindow"
+pretty = "Blindwindow"
+
+[tool.maxson-build-utils.pyinstaller]
+mode = "onedir"
+windowed = false
+collect_data_pkgs = ["blindwindow"]
+collect_binary_pkgs = []
+
+[tool.maxson-build-utils.packaging.msix]
+publisher = "CN=Development"
+publisher_display_name = "George Clayton Bennett"
+identity_name = "GeorgeClaytonBennett.Blindwindow"

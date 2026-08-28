@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=blindwindow
+Exec=blindwindow
+Icon=io.github.city_of_memphis_wastewater.blindwindow
+Type=Application
+Categories=Utility;

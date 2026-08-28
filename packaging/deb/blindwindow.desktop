@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Blindwindow
+Exec=blindwindow
+Icon=blindwindow
+Type=Application
+Categories=Utility;
+Terminal=false

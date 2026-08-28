@@ -1,0 +1,2 @@
+include src/blindwindow/data/*
+#recursive-include src/blindwindow/data/icons *

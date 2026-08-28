@@ -1,0 +1,7 @@
+Package: blindwindow
+Version: 0.1.0
+Section: utils
+Priority: optional
+Architecture: amd64
+Maintainer: George Clayton Bennett <george.bennett@memphistn.gov>
+Description: A Python application.
