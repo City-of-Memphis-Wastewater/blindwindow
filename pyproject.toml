@@ -1,7 +1,7 @@
 [project]
 name = "blindwindow"
 dynamic = ["version"]
-description = "A Python application."
+description = "Route console stderr and stdout to blindwindow, to either duplicate or display what is otherwise hidden. Namely for MSIX deployed CLI's"
 readme = "README.md"
 requires-python = ">=3.10"
 
