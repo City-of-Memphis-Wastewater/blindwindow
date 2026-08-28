@@ -6,8 +6,8 @@ The format is (read: strives to be) based on [Keep a Changelog](https://keepacha
 
 ---
 
-## [0.1.0] - YYYY-MM-DD
+## [0.1.0] - 2026-08-27
 ### Added:
--
+- Initial commit, notes on S24
 
 ---
