@@ -17,10 +17,12 @@ jobs:
           python-version: '3.12'
 
       - name: Install Project & mbu
-        run: pip install .
+        run: |
+          pip install .
+          uv sync --group dev
 
       - name: Execute Onedir Compilation
-        run: mbu build pyinstaller --mode onedir
+        run: uv run mbu build pyinstaller --mode onedir
 
       - name: Upload Canonical Payload Artifact
         uses: actions/upload-artifact@v7
