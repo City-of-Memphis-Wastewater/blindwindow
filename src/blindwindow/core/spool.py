@@ -1,4 +1,4 @@
-# src/maxson_gui_utils/blindwindow/spool.py
+# src/blindwindow/core/spool.py
 from __future__ import annotations
 
 import json

@@ -1,4 +1,4 @@
-# src/maxson_gui_utils/blindwindow/launcher.py
+# src/blindwindow/core/launcher.py
 from __future__ import annotations
 
 import logging

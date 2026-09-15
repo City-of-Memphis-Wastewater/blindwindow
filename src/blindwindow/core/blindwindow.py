@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# src/maxson_gui_utils/blindwindow/blindwindow.py
+# src/blindwindow/core/blindwindow.py
 from __future__ import annotations
 
 import logging

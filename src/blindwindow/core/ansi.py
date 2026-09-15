@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# src/maxson_gui_utils/ansi.py
+# src/blindwindow/core/ansi.py
 from __future__ import annotations
 import re
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# src/maxson_gui_utils/console.py
+# src/blindwindow/core/console.py
 
 from __future__ import annotations
 

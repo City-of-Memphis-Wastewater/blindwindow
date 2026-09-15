@@ -157,8 +157,6 @@ def blindwindow_cmd(
 
     launch_blindwindow(
         title=title,
-        #port=port,
-        #pipe_name=pipe_name,
         always_on_top=always_on_top,
         autoscroll=autoscroll,
     )
