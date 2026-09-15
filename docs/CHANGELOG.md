@@ -6,6 +6,12 @@ The format is (read: strives to be) based on [Keep a Changelog](https://keepacha
 
 ---
 
+## [0.1.2] - 2026-09-15
+### Changed:
+- Python 3.9 compatbility by pinning Typer version for ranges.
+
+---
+
 ## [0.1.1] - 2026-09-15
 ### Added:
 - Migrated blindwindow components from maxson-gui-utils, for modular inclusion.
