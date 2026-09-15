@@ -16,10 +16,14 @@ _ANSI_RE = re.compile(
     r"(?:\x1B[@-Z\\-_]|[\x80-\x9A\x9C-\x9F]|(?:\x1B\[|\x9B)[0-?]*[ -/]*[@-~])"
 )
 
-def strip_ansi(text: str) -> str:
+def strip_ansi(text: str | bytes) -> str:
     """Removes ANSI color and control codes from text strings."""
     if not text:
         return ""
+
+    if isinstance(text, bytes):
+        text = text.decode("utf-8", errors="replace")
+
     return _ANSI_RE.sub("", text)
 
 def parse_ansi(text: str):
