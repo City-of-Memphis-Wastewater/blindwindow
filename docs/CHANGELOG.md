@@ -6,6 +6,12 @@ The format is (read: strives to be) based on [Keep a Changelog](https://keepacha
 
 ---
 
+## [0.1.1] - 2026-09-15
+### Added:
+- Migrated blindwindow components from maxson-gui-utils, for modular inclusion.
+
+---
+
 ## [0.1.0] - 2026-08-27
 ### Added:
 - Initial commit, notes on S24
