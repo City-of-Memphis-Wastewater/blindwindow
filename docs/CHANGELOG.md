@@ -6,6 +6,12 @@ The format is (read: strives to be) based on [Keep a Changelog](https://keepacha
 
 ---
 
+## [0.1.4] - 2026-09-15
+### Changed:
+- MacOS support now functional, with self._append_queue.put() rather than elf.after_idle(), in BlindWindow._safe_append()
+
+---
+
 ## [0.1.3] - 2026-09-15
 ### Changed:
 - Enable ansi.strip_ansi() to handle bytes.
