@@ -51,7 +51,8 @@ keywords = [
 #Changelog = ""
 
 [project.scripts]
-"blindwindow" = "blindwindow.__main__:app"
+"blindwindow" = "blindwindow.cli:app"
+"bw" = "blindwindow.cli:app"
 
 [dependency-groups]
 test = [
