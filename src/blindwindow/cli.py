@@ -104,8 +104,8 @@ add_typer_helptree(
     hidden=False,
 )
 
-@app.command(name="gui")
-def gui_command(
+
+def gui_command_generic(
     auto_close: int = typer.Option(0,
    "--auto-close", "-c",
    help = "Delay in milliseconds after which the GUI window will close (for automated testing). Use 0 to disable auto-closing.",
@@ -141,10 +141,9 @@ def gui_command(
     start_gui(time_auto_close = assured_auto_close_value)
 
 @app.command(name="blindwindow")
+@app.command(name="gui")
 def blindwindow_cmd(
-    title: str = typer.Option("BlindWindow Output", "--title", "-t", help="Custom window title bar text."),
-    #port: Optional[int] = typer.Option(None, "--port", help="Port for UDP stream listeners."),
-    #pipe_name: Optional[str] = typer.Option(None, "--pipe-name", help="Custom IPC Named Pipe or UDS path."),
+    title: str = typer.Option("BlindWindow", "--title", "-t", help="Custom window title bar text."),
     always_on_top: bool = typer.Option(False, "--always-on-top", "--ontop", help="Keep window floating above other windows."),
     autoscroll: bool = typer.Option(True, "--autoscroll/--no-autoscroll", help="Automatically scroll to the newest stream input."),
 ) -> None:
