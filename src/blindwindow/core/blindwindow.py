@@ -6,6 +6,7 @@ import logging
 import sys
 import pyhabitat
 import threading
+import queue
 
 from maxson_gui_utils.textpane import TextPane
 from .ansi import strip_ansi
@@ -34,6 +35,9 @@ class BlindWindow(TextPane):
         logger.debug("[BlindWindow.__init__] Initializing BlindWindow widget (autoscroll=%s)", autoscroll)
         super().__init__(master, **kwargs)
 
+        self._append_queue: queue.Queue[tuple[str, str]] = queue.Queue()
+        self._append_poll_id = self.after(10, self._drain_append_queue)
+
         self._orig_stdout = sys.stdout
         self._orig_stderr = sys.stderr
 
@@ -47,19 +51,6 @@ class BlindWindow(TextPane):
         logger.debug("[BlindWindow.__init__] Registering self._safe_append in-process listener...")
         register_listener(self._safe_append)
 
-    def _safe_append_defunct(self, text: str, tag: str = "stdout") -> None:
-        """Thread-safe append helper for Tkinter mainloop with guaranteed ANSI cleanup."""
-        clean_text = strip_ansi(text)
-        if not clean_text:
-            return
-        try:
-            logger.debug("[BlindWindow._safe_append] Scheduling self.append via after_idle | tag=%s", tag)
-            #self.after_idle(self.append, clean_text, tag)
-            self.after_idle(self._logged_append, clean_text, tag)
-        except Exception as err:
-
-           logger.exception("[BlindWindow._safe_append] Failed to schedule after_idle append: %s", err)
-
     def _safe_append(self, text: str, tag: str = "stdout") -> None:
         clean_text = strip_ansi(text)
         if not clean_text:
@@ -70,8 +61,9 @@ class BlindWindow(TextPane):
             threading.get_ident(),
             clean_text[:30],
         )
-        self.after_idle(self._logged_append, clean_text, tag)
-        
+        #self.after_idle(self._logged_append, clean_text, tag)
+        self._append_queue.put((clean_text, tag))
+
     def _logged_append(self, text: str, tag: str = "stdout") -> None:
         """Wrapper around TextPane.append to verify Tkinter mainloop thread execution."""
         logger.debug("[BlindWindow._logged_append] Executing append in Tkinter mainloop | tag=%s | text_len=%d", tag, len(text))
@@ -82,12 +74,52 @@ class BlindWindow(TextPane):
             logger.debug("[BlindWindow._logged_append] Successfully inserted text into TextPane widget.")
         except Exception as err:
             logger.exception("[BlindWindow._logged_append] Exception occurred while inserting into TextPane: %s", err)
+
+    def _drain_append_queue(self) -> None:
+        """Drain pending output on the Tkinter mainloop thread."""
+        try:
+            while True:
+                text, tag = self._append_queue.get_nowait()
+
+                logger.debug(
+                    "[BlindWindow._drain_append_queue] Main thread appending "
+                    "| tag=%s | text_len=%d",
+                    tag,
+                    len(text),
+                )
+
+                self._logged_append(text, tag)
+
+        except queue.Empty:
+            pass
+
+        try:
+            self._append_poll_id = self.after(10, self._drain_append_queue)
+        except Exception:
+            logger.exception(
+                "[BlindWindow._drain_append_queue] Failed to reschedule queue drain."
+            )
             
     def destroy(self) -> None:
         """Clean up process I/O streams and unregister dispatch listeners."""
-        logger.info("[BlindWindow.destroy] Cleaning up streams and unregistering listeners...")
+        logger.info(
+            "[BlindWindow.destroy] Cleaning up streams and unregistering listeners..."
+        )
+
         sys.stdout = self._orig_stdout
         sys.stderr = self._orig_stderr
+
         unregister_listener(self._safe_append)
+
+        if getattr(self, "_append_poll_id", None) is not None:
+            try:
+                self.after_cancel(self._append_poll_id)
+            except Exception:
+                logger.debug(
+                    "[BlindWindow.destroy] Failed to cancel append queue poll.",
+                    exc_info=True,
+                )
+            self._append_poll_id = None
+
         super().destroy()
 
