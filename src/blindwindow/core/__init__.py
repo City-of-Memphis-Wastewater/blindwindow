@@ -12,6 +12,8 @@ __all__ = [
     "GuiStream",
     "install_stream_wrappers",
     "get_spool_path",
+    "launch_blindwindow",
+    "BlindWindow",
 ]
 
 
@@ -37,7 +39,14 @@ def __getattr__(name: str):
     if name == "get_spool_path":
         from .spool import get_spool_path
         return get_spool_path
-    
+
+    if name == "BlindWindow":
+        from .blindwindow import BlindWindow
+        return BlindWindow
+
+    if name == "launch_blindwindow":
+        from .launcher import launch_blindwindow
+        return launch_blindwindow
 
     raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
 
