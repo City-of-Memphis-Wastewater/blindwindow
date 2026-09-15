@@ -6,6 +6,13 @@ The format is (read: strives to be) based on [Keep a Changelog](https://keepacha
 
 ---
 
+## [0.1.3] - 2026-09-15
+### Changed:
+- Enable ansi.strip_ansi() to handle bytes.
+- Enable SystemStreamWrapper.write() to handle bytes. 
+
+---
+
 ## [0.1.2] - 2026-09-15
 ### Changed:
 - Python 3.9 compatbility by pinning Typer version for ranges.
