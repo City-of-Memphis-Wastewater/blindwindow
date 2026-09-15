@@ -63,7 +63,9 @@ class SystemStreamWrapper:
         self.target = target
         self.tag = tag
 
-    def write(self, text: str) -> int:
+    def write(self, text: str | bytes) -> int:
+        if isinstance(text, bytes):
+            text = text.decode("utf-8", errors="replace")
         res = 0
         if self.target:
             res = self.target.write(text)
