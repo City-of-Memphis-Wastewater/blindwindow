@@ -14,5 +14,5 @@ See the `blindwindow` Typer CLI structure.
 blindwindow helptree
 ```
 <p align="center">
-  <img src="https://raw.githubusercontent.com/City-of-Memphis-Wastewater/blindwindow/main/assets/blindwindow_v0.1.1_helptree.svg" width="100%" alt="SVG of the CLI helptree">
+  <img src="https://raw.githubusercontent.com/City-of-Memphis-Wastewater/blindwindow/main/assets/blindwindow_v0.1.3_helptree.svg" width="100%" alt="SVG of the CLI helptree">
 </p>
