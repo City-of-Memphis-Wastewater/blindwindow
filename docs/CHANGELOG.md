@@ -6,6 +6,12 @@ The format is (read: strives to be) based on [Keep a Changelog](https://keepacha
 
 ---
 
+## [0.1.5] - 2026-09-16
+### Changed:
+- Core import in src/blindwindow/__init__.py only exposes name, without performing astericked all-function import.
+
+---
+
 ## [0.1.4] - 2026-09-15
 ### Changed:
 - MacOS support now functional, with self._append_queue.put() rather than elf.after_idle(), in BlindWindow._safe_append()
