@@ -8,7 +8,13 @@ import pyhabitat
 import threading
 import queue
 
-from maxson_gui_utils.textpane import TextPane
+try:
+    from maxson_gui_utils.textpane import TextPane
+except ImportError:
+    pass
+    #print("Tkinter export failing")
+    #sys.exit(0)
+    
 from .ansi import strip_ansi
 from .registration import (
     register_listener,

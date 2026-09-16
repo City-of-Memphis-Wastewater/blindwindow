@@ -4,7 +4,7 @@ from __future__ import annotations
 import os
 
 from ._version import __version__
-from .core import *  # Import all public symbols from core
+##from .core import *  # Import all public symbols from core
 from . import core   # Explicitly expose core subpackage
 
 # 1. Clean public-facing mapping
@@ -12,7 +12,7 @@ __all__ = [
     "__version__",
     "__gui_easteregg_enabled__",
     "core",
-    *core.__all__,   # Spread core's exported symbols into top-level __all__
+#    *core.__all__,   # Spread core's exported symbols into top-level __all__
 ]
 
 
