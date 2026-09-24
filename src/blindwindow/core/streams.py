@@ -7,7 +7,11 @@ import sys
 from typing import Any, Callable
 
 from .ansi import strip_ansi
-from .registration import dispatch_write, is_dispatch_suppressed
+from .registration import (
+    dispatch_write,
+    is_dispatch_suppressed,
+    suppress_stream_wrapper_dispatch,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -34,7 +38,7 @@ class GuiStream:
 
 
 class TeeStream:
-    """Duplicates writes across multiple streams."""
+    """Duplicates writes across multiple streams without triggering duplicate dispatches."""
 
     def __init__(self, *streams: Any):
         self.streams = [s for s in streams if s is not None]
@@ -45,9 +49,23 @@ class TeeStream:
             # Do not drop text for GuiStream instances
             is_gui = isinstance(s, GuiStream)
             output_text = text if (is_tty or is_gui) else strip_ansi(text)
+            '''
             if output_text:
                 logger.debug("[TeeStream.write] Writing %d chars to stream target: %r", len(output_text), s)
                 s.write(output_text)
+            '''
+            if output_text:
+                logger.debug(
+                    "[TeeStream.write] Writing %d chars to stream target: %r",
+                    len(output_text),
+                    s,
+                )
+                # Prevent SystemStreamWrapper targets from double-dispatching
+                if is_gui:
+                    s.write(output_text)
+                else:
+                    with suppress_stream_wrapper_dispatch():
+                        s.write(output_text)
         return len(text)
 
     def flush(self) -> None:
