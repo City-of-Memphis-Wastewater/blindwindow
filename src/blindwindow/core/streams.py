@@ -49,7 +49,7 @@ class TeeStream:
             # Do not drop text for GuiStream instances
             is_gui = isinstance(s, GuiStream)
             output_text = text if (is_tty or is_gui) else strip_ansi(text)
-            '''
+            
             if output_text:
                 logger.debug("[TeeStream.write] Writing %d chars to stream target: %r", len(output_text), s)
                 s.write(output_text)
@@ -66,6 +66,7 @@ class TeeStream:
                 else:
                     with suppress_stream_wrapper_dispatch():
                         s.write(output_text)
+            '''
         return len(text)
 
     def flush(self) -> None:
